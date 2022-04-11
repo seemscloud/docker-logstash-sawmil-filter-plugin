@@ -4,9 +4,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
 apply plugin: 'java'
 apply from: LOGSTASH_CORE_PATH + "/../rubyUtils.gradle"
 
-// ===========================================================================
-// plugin info
-// ===========================================================================
 group                      'org.logstashplugins'
 version                    "${file("VERSION").text.trim()}"
 description                = "Logz.io sawmill filter"
@@ -16,9 +13,8 @@ pluginInfo.authors         = ['Mateusz Adam Katana']
 pluginInfo.email           = ['contact@seems.cloud']
 pluginInfo.homepage        = "https://www.seems.cloud"
 pluginInfo.pluginType      = "filter"
-pluginInfo.pluginClass     = "JavaFilterExample"
-pluginInfo.pluginName      = "java_filter_example"
-// ===========================================================================
+pluginInfo.pluginClass     = "Sawmill"
+pluginInfo.pluginName      = "sawmill"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

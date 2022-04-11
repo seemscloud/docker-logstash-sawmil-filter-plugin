@@ -7,29 +7,28 @@ import co.elastic.logstash.api.Filter;
 import co.elastic.logstash.api.FilterMatchListener;
 import co.elastic.logstash.api.LogstashPlugin;
 import co.elastic.logstash.api.PluginConfigSpec;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.LinkedHashMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
 import io.logz.sawmill.Pipeline;
 import io.logz.sawmill.PipelineExecutor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
-@LogstashPlugin(name = "java_filter_example")
-public class JavaFilterExample implements Filter {
-
-    public static final PluginConfigSpec<String> SOURCE_CONFIG =
-            PluginConfigSpec.stringSetting("source", "message");
+@LogstashPlugin(name = "sawmill")
+public class Sawmill implements Filter {
+    public static final PluginConfigSpec<String> SOURCE_CONFIG = PluginConfigSpec.stringSetting("source", "message");
 
     private String id;
     private String sourceField;
 
-    public JavaFilterExample(String id, Configuration config, Context context) {
+    public Sawmill(String id, Configuration config, Context context) {
         this.id = id;
         this.sourceField = config.get(SOURCE_CONFIG);
     }
@@ -51,17 +50,7 @@ public class JavaFilterExample implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         Doc doc = createDoc("message", "testing geoip resolving", "ip", "172.217.11.174");
-
-        Pipeline pipeline = new Pipeline.Factory().create(
-                    "{ steps :[{\n" +
-                    "    removeField: {\n" +
-                    "      config: {\n" +
-                    "        path: \"message\"\n" +
-                    "      }\n" +
-                    "    }\n" +
-                    "  }]\n" +
-                    "}");
-
+        Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
         ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
 
         if (executionResult.isSucceeded()) {
@@ -69,12 +58,16 @@ public class JavaFilterExample implements Filter {
         }
 
         for (Event e : events) {
-            Object f = e.getField(sourceField);
-            if (f instanceof String) {
-                e.setField(sourceField, StringUtils.reverse((String)f));
-                matchListener.filterMatched(e);
-            }
+            System.out.println("Success! result is:"+e.toString());
         }
+
+//         for (Event e : events) {
+//             Object f = e.getField(sourceField);
+//             if (f instanceof String) {
+//                 e.setField(sourceField, StringUtils.reverse((String)f));
+//                 matchListener.filterMatched(e);
+//             }
+//         }
         return events;
     }
 
