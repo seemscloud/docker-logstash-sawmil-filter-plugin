@@ -1,0 +1,10 @@
+- pipeline.id: ingest
+  pipeline.workers: 1
+  pipeline.batch.size: 150
+  pipeline.batch.delay: 50
+  pipeline.ecs_compatibility: disabled
+  pipeline.ordered: false
+  queue.type: memory
+  path.config: "/app/config/pipelines/ingest"
+  config.reload.automatic: true
+  config.reload.interval: 3s

@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  bot:
+    container_name: bot
+    hostname: bot
+    build:
+      context: ./bot
+  logstash:
+    container_name: logstash
+    hostname: logstash
+    build:
+      context: ./logstash
+    volumes:
+      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
+      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
+      - ${PWD}/logstash/files/entrypoints/logstash.sh:/app/entrypoint.sh:ro
+      - logstash-data:/app/config/pipelines:ro
+      - filter-data:/filter:rw
+  validator:
+    container_name: validator
+    hostname: validator
+    build:
+      context: ./logstash
+    volumes:
+      - ${PWD}/logstash/files/pipelines:/app/config/pipelines:ro
+      - ${PWD}/logstash/files/entrypoints/logstash-validator.sh:/app/entrypoint.sh:ro
+      - logstash-data:/data:rw
+  filter:
+    container_name: filter
+    hostname: filter
+    build:
+      context: ./filter
+    volumes:
+      - ${PWD}/filter/entrypoint.sh:/app/entrypoint.sh:ro
+      - filter-data:/data:rw
+
+volumes:
+  logstash-data:
+  filter-data:

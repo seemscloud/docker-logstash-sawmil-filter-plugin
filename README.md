@@ -1,1 +1,0 @@
-# docker-logstash-sawmil-filter-plugin
