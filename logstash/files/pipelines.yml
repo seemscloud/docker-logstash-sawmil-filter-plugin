@@ -5,6 +5,6 @@
   pipeline.ecs_compatibility: disabled
   pipeline.ordered: false
   queue.type: memory
-  path.config: "/app/config/pipelines/ingest"
+  path.config: "/root/config/pipelines/ingest"
   config.reload.automatic: true
   config.reload.interval: 3s

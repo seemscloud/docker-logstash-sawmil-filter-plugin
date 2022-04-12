@@ -16,7 +16,7 @@ services:
       - ${PWD}/logstash/files/pipelines.yml:/root/config/pipelines.yml:ro
       - ${PWD}/logstash/files/entrypoints/logstash.sh:/root/entrypoint.sh:ro
       - logstash-pipelines:/root/config/pipelines:ro
-      - build-data:/data:rw
+      - build-data:/plugins:rw
   pipelines:
     container_name: pipelines
     hostname: pipelines
