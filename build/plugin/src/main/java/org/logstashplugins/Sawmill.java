@@ -48,7 +48,7 @@ public class Sawmill implements Filter {
         MapType mapType = mapper.getTypeFactory().constructMapType(LinkedHashMap.class, String.class, Object.class);
 
         for (Event e : events) {
-            System.out.println(e.toJson());
+            Doc document = new Doc(e);
         }
 
 //         for (Event e : events) {
