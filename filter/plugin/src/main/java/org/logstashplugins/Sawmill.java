@@ -10,7 +10,12 @@ import co.elastic.logstash.api.PluginConfigSpec;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
@@ -20,6 +25,8 @@ import io.logz.sawmill.PipelineExecutor;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 @LogstashPlugin(name = "sawmill")
 public class Sawmill implements Filter {
@@ -33,41 +40,29 @@ public class Sawmill implements Filter {
         this.sourceField = config.get(SOURCE_CONFIG);
     }
 
-    public static Doc createDoc(Object... objects) {
-        if (objects.length % 2 != 0) {
-            throw new RuntimeException("Can't construct map out of uneven number of elements");
-        }
-
-        LinkedHashMap map = new LinkedHashMap<>();
-        if (objects != null) {
-            for (int i = 0; i < objects.length; i++) {
-                map.put(objects[i], objects[++i]);
-            }
-        }
-        return new Doc(map);
-    }
-
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
-        Doc doc = createDoc("message", "testing geoip resolving", "ip", "172.217.11.174");
         Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
-        ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
 
-        if (executionResult.isSucceeded()) {
-            System.out.println("Success! result is:"+doc.toString());
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        MapType mapType = mapper.getTypeFactory().constructMapType(LinkedHashMap.class, String.class, Object.class);
 
         for (Event e : events) {
-            System.out.println("Success! result is:"+e.toString());
+            try {
+                System.out.println("Debug");
+                LinkedHashMap<String, Object> map = mapper.readValue(e.toString(), mapType);
+                Doc document = new Doc(map);
+                ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, document);
+
+                if (executionResult.isSucceeded()) {
+                    System.out.println("OK" + document.toString());
+                }
+            } catch (JsonProcessingException exp) {
+                System.out.println(exp);
+            }
+            matchListener.filterMatched(e);
         }
 
-//         for (Event e : events) {
-//             Object f = e.getField(sourceField);
-//             if (f instanceof String) {
-//                 e.setField(sourceField, StringUtils.reverse((String)f));
-//                 matchListener.filterMatched(e);
-//             }
-//         }
         return events;
     }
 

@@ -1,3 +1,5 @@
 {
-  "message": "Example message"
+  "message": "Example message",
+  "foo": "foo",
+  "bar": "bar"
 }
