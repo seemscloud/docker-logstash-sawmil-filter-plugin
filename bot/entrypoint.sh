@@ -6,5 +6,4 @@ while true; do
   curl -X PUT http://logstash:8080  \
        -H "Content-Type: application/json" \
        -d @event.json --silent
-  sleep 1
 done

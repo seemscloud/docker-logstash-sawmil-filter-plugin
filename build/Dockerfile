@@ -14,12 +14,16 @@ RUN apt-get update && \
 
 WORKDIR "${APP_DIR}"
 
-COPY ./plugin plugin
-
 RUN git clone --branch "${APP_VERSION}" --single-branch "${APP_URL}" logstash
+
+RUN echo "org.gradle.parallel=true" >> logstash/gradle.properties && \
+    echo "org.gradle.caching=true=true" >> logstash/gradle.properties && \
+    echo "org.gradle.jvmargs=-Xmx4096m" >> logstash/gradle.properties
 
 RUN cd logstash && \
     ./gradlew assemble
+
+COPY ./plugin plugin
 
 RUN cd plugin && \
     chmod +x gradlew && \

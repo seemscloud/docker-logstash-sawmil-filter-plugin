@@ -48,20 +48,24 @@ public class Sawmill implements Filter {
         MapType mapType = mapper.getTypeFactory().constructMapType(LinkedHashMap.class, String.class, Object.class);
 
         for (Event e : events) {
-            try {
-                System.out.println("Debug");
-                LinkedHashMap<String, Object> map = mapper.readValue(e.toString(), mapType);
-                Doc document = new Doc(map);
-                ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, document);
-
-                if (executionResult.isSucceeded()) {
-                    System.out.println("OK" + document.toString());
-                }
-            } catch (JsonProcessingException exp) {
-                System.out.println(exp);
-            }
-            matchListener.filterMatched(e);
+            System.out.println(e.toJson());
         }
+
+//         for (Event e : events) {
+//             try {
+//                 System.out.println("Debug");
+//                 LinkedHashMap<String, Object> map = mapper.readValue(e.toString(), mapType);
+//                 Doc document = new Doc(map);
+//                 ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, document);
+//
+//                 if (executionResult.isSucceeded()) {
+//                     System.out.println("OK" + document.toString());
+//                 }
+//             } catch (JsonProcessingException exp) {
+//                 System.out.println(exp);
+//             }
+//             matchListener.filterMatched(e);
+//         }
 
         return events;
     }

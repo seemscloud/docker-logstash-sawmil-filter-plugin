@@ -1,5 +1,12 @@
-{
-  "message": "Example message",
-  "foo": "foo",
-  "bar": "bar"
-}
+[
+  {
+    "message": "Example message",
+    "foo": "foo",
+    "bar": "bar"
+  },
+  {
+    "message": "Example message",
+    "foo": "foo",
+    "bar": "bar"
+  }
+]
