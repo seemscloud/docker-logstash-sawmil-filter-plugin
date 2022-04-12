@@ -5,23 +5,21 @@ ARG APP_VERSION="7.17"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV APP_DIR="/app"
-ENV PATH="${APP_DIR}/bin:${PATH}"
-
-ENV  LOGSTASH_CORE_PATH="${APP_DIR}"/logstash/logstash-core
+ENV APP_DIR="/root"
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install wget openssl curl git -y
+    apt-get install git -y
 
 WORKDIR "${APP_DIR}"
 
-RUN git clone --branch "${APP_VERSION}" --single-branch "${APP_URL}" logstash && \
-    cd logstash && \
-    ./gradlew assemble
-
 COPY ./plugin plugin
+
+RUN git clone --branch "${APP_VERSION}" --single-branch "${APP_URL}" logstash
+
+RUN cd logstash && \
+    ./gradlew assemble
 
 RUN cd plugin && \
     chmod +x gradlew && \

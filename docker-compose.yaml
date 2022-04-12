@@ -16,25 +16,27 @@ services:
       - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
       - ${PWD}/logstash/files/entrypoints/logstash.sh:/app/entrypoint.sh:ro
       - logstash-data:/app/config/pipelines:ro
-      - filter-data:/filter:rw
-  validator:
-    container_name: validator
-    hostname: validator
+      - build-data:/data:rw
+  filters:
+    container_name: filters
+    hostname: filters
     build:
       context: ./logstash
     volumes:
       - ${PWD}/logstash/files/pipelines:/app/config/pipelines:ro
-      - ${PWD}/logstash/files/entrypoints/logstash-validator.sh:/app/entrypoint.sh:ro
+      - ${PWD}/logstash/files/entrypoints/logstash-filters.sh:/app/entrypoint.sh:ro
       - logstash-data:/data:rw
-  filter:
-    container_name: filter
-    hostname: filter
+  build:
+    container_name: build
+    hostname: build
     build:
-      context: ./filter
+      context: ./build
     volumes:
-      - ${PWD}/filter/entrypoint.sh:/app/entrypoint.sh:ro
-      - filter-data:/data:rw
+      - ${PWD}/build/entrypoint.sh:/root/entrypoint.sh:ro
+      - build-data:/root/data:rw
+      - build-cache:/root/.gradle:rw
 
 volumes:
   logstash-data:
-  filter-data:
+  build-data:
+  build-cache:
