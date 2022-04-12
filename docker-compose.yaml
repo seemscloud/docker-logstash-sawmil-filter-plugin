@@ -12,20 +12,20 @@ services:
     build:
       context: ./logstash
     volumes:
-      - ${PWD}/logstash/files/logstash.yml:/app/config/logstash.yml:ro
-      - ${PWD}/logstash/files/pipelines.yml:/app/config/pipelines.yml:ro
-      - ${PWD}/logstash/files/entrypoints/logstash.sh:/app/entrypoint.sh:ro
-      - logstash-data:/app/config/pipelines:ro
+      - ${PWD}/logstash/files/logstash.yml:/root/config/logstash.yml:ro
+      - ${PWD}/logstash/files/pipelines.yml:/root/config/pipelines.yml:ro
+      - ${PWD}/logstash/files/entrypoints/logstash.sh:/root/entrypoint.sh:ro
+      - logstash-pipelines:/root/config/pipelines:ro
       - build-data:/data:rw
-  filters:
-    container_name: filters
-    hostname: filters
+  pipelines:
+    container_name: pipelines
+    hostname: pipelines
     build:
       context: ./logstash
     volumes:
-      - ${PWD}/logstash/files/pipelines:/app/config/pipelines:ro
-      - ${PWD}/logstash/files/entrypoints/logstash-filters.sh:/app/entrypoint.sh:ro
-      - logstash-data:/data:rw
+      - ${PWD}/logstash/files/pipelines:/root/config/pipelines:ro
+      - ${PWD}/logstash/files/entrypoints/logstash-filters.sh:/root/entrypoint.sh:ro
+      - logstash-pipelines:/pipelines:rw
   build:
     container_name: build
     hostname: build
@@ -37,6 +37,6 @@ services:
       - build-cache:/root/.gradle:rw
 
 volumes:
-  logstash-data:
+  logstash-pipelines:
   build-data:
   build-cache:
