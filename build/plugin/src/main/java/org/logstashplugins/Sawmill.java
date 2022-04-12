@@ -3,6 +3,7 @@ package org.logstashplugins;
 import co.elastic.logstash.api.Configuration;
 import co.elastic.logstash.api.Context;
 import co.elastic.logstash.api.Event;
+import co.elastic.logstash.api.EventFactory;
 import co.elastic.logstash.api.Filter;
 import co.elastic.logstash.api.FilterMatchListener;
 import co.elastic.logstash.api.LogstashPlugin;
@@ -40,32 +41,23 @@ public class Sawmill implements Filter {
         this.sourceField = config.get(SOURCE_CONFIG);
     }
 
+    private static Event fromList(final Map<String, Object> map, final EventFactory factory){
+        return (Event) factory.newEvent(map);
+    }
+
+//     public Event newEvent(Map<String, Object> eventMap) {
+//         return new org.logstash.Event(eventMap);
+//     }
+
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
 
-        ObjectMapper mapper = new ObjectMapper();
-        MapType mapType = mapper.getTypeFactory().constructMapType(LinkedHashMap.class, String.class, Object.class);
-
         for (Event e : events) {
-            Doc document = new Doc(e);
+            Doc sawmillDoc = new Doc(e.toMap());
+            ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, sawmillDoc);
+            Map<String, Object> eventMap = sawmillDoc.getSource();
         }
-
-//         for (Event e : events) {
-//             try {
-//                 System.out.println("Debug");
-//                 LinkedHashMap<String, Object> map = mapper.readValue(e.toString(), mapType);
-//                 Doc document = new Doc(map);
-//                 ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, document);
-//
-//                 if (executionResult.isSucceeded()) {
-//                     System.out.println("OK" + document.toString());
-//                 }
-//             } catch (JsonProcessingException exp) {
-//                 System.out.println(exp);
-//             }
-//             matchListener.filterMatched(e);
-//         }
 
         return events;
     }

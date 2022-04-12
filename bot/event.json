@@ -7,6 +7,10 @@
   {
     "message": "Example message",
     "foo": "foo",
+    "x": {
+      "1": "2",
+      "2": "1"
+    },
     "bar": "bar"
   }
 ]
