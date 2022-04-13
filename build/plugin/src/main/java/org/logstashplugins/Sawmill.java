@@ -37,11 +37,15 @@ public class Sawmill implements Filter {
         Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
 
         for (Event e : events) {
-            Doc sawmillDoc = new Doc(e.toMap());
-            ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, sawmillDoc);
-            Map<String, Object> eventMap = sawmillDoc.getSource();
+            Doc doc = new Doc(e.toMap());
+            ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
 
-            e.overwrite(new org.logstash.Event(eventMap));
+            Map<String, Object> map = doc.getSource();
+
+            Event tmp = new org.logstash.Event(map);
+            matchListener.filterMatched(tmp);
+
+            e.overwrite(tmp);
         }
 
         return events;
