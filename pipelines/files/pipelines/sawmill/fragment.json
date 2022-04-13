@@ -18,13 +18,6 @@
                 ]
               }
             }
-          },
-          {
-            "removeField": {
-              "config": {
-                "path": "kv"
-              }
-            }
           }
         ]
       }
@@ -40,13 +33,6 @@
             "json": {
               "config": {
                 "field": "json"
-              }
-            }
-          },
-          {
-            "removeField": {
-              "config": {
-                "path": "kv"
               }
             }
           }
