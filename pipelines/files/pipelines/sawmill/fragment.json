@@ -9,12 +9,22 @@
       }
     },
     {
-      "date": {
+      "addField": {
         "config": {
-          "field": "foo",
-          "targetField": "datetime",
-          "formats": [
-            "ISO8601"
+          "path": "field",
+          "value": "value"
+        }
+      }
+    },
+    {
+      "kv": {
+        "config": {
+          "field": "@message",
+          "fieldSplit": " ",
+          "valueSplit": ":",
+          "includeKeys": [
+            "a",
+            "b"
           ]
         },
         "onSuccess": [
@@ -22,7 +32,7 @@
             "addTag": {
               "config": {
                 "tags": [
-                  "success/kvx"
+                  "success/kv"
                 ]
               }
             }
@@ -33,7 +43,7 @@
             "addTag": {
               "config": {
                 "tags": [
-                  "fail/kvx"
+                  "fail/kv"
                 ]
               }
             }
