@@ -9,26 +9,12 @@
       }
     },
     {
-      "gsub": {
+      "date": {
         "config": {
           "field": "foo",
-          "pattern": "#",
-          "replacement": "!"
-        }
-      }
-    },
-    {
-      "kv": {
-        "config": {
-          "field": "@message",
-          "fieldSplit": " ",
-          "valueSplit": ":",
-          "includeKeys": [
-            "a",
-            "b"
-          ],
-          "tagOfFailure": [
-            "dupa"
+          "targetField": "datetime",
+          "formats": [
+            "ISO8601"
           ]
         },
         "onSuccess": [
@@ -36,7 +22,7 @@
             "addTag": {
               "config": {
                 "tags": [
-                  "success/kv"
+                  "success/kvx"
                 ]
               }
             }
@@ -47,7 +33,7 @@
             "addTag": {
               "config": {
                 "tags": [
-                  "fail/kv"
+                  "fail/kvx"
                 ]
               }
             }
