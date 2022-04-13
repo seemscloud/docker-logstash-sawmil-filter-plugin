@@ -9,13 +9,6 @@
       }
     },
     {
-      "docSize": {
-        "config": {
-          "targetField": "size"
-        }
-      }
-    },
-    {
       "gsub": {
         "config": {
           "field": "foo",

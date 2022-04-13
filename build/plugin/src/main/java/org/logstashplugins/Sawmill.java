@@ -39,7 +39,8 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-            File file = new File("/root/config/pipelines/sawmill/fragment.json");
+            String sawmillPipelines = System.getenv("SAWMILL_PIPELINES_PATH");
+            File file = new File(sawmillPipelines + "/fragment.json");
             String content = FileUtils.readFileToString(file, "UTF-8");
 
             Pipeline pipeline = new Pipeline.Factory().create(content);

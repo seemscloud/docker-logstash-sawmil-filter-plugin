@@ -13,6 +13,7 @@ services:
       - "9600:9600"
     environment:
       - "LS_JAVA_OPTS=-Xmx8g -Xms8g -Dls.cgroup.cpuacct.path.override=/ -Dls.cgroup.cpu.path.override=/"
+      - "SAWMILL_PIPELINES_PATH=/root/config/pipelines/sawmill"
     build:
       context: ./logstash
     deploy:
