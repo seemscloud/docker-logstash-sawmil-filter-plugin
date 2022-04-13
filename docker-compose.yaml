@@ -5,7 +5,7 @@ services:
     build:
       context: ./bot
     deploy:
-      replicas: 1
+      replicas: 25
   logstash:
     container_name: logstash
     hostname: logstash
