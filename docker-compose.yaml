@@ -15,6 +15,14 @@ services:
       - "LS_JAVA_OPTS=-Xmx8g -Xms8g"
     build:
       context: ./logstash
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 9G
+        reservations:
+          cpus: '4'
+          memory: 9G
     volumes:
       - ${PWD}/logstash/files/logstash.yml:/root/config/logstash.yml:ro
       - ${PWD}/logstash/files/pipelines.yml:/root/config/pipelines.yml:ro
