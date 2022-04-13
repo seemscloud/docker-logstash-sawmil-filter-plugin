@@ -1,50 +1,52 @@
 {
   "steps": [
     {
-      "rename": {
+      "addField": {
         "config": {
-          "from": "message",
-          "to": "@message"
-        }
+          "path": "kv",
+          "value": "{{messages.kv}}"
+        },
+        "onSuccess": [
+          {
+            "kv": {
+              "config": {
+                "field": "kv",
+                "valueSplit": ":",
+                "includeKeys": [
+                  "a",
+                  "b"
+                ]
+              }
+            }
+          },
+          {
+            "removeField": {
+              "config": {
+                "path": "kv"
+              }
+            }
+          }
+        ]
       }
     },
     {
       "addField": {
         "config": {
-          "path": "field",
-          "value": "value"
-        }
-      }
-    },
-    {
-      "kv": {
-        "config": {
-          "field": "@message",
-          "fieldSplit": " ",
-          "valueSplit": ":",
-          "includeKeys": [
-            "a",
-            "b"
-          ]
+          "path": "json",
+          "value": "{{messages.json}}"
         },
         "onSuccess": [
           {
-            "addTag": {
+            "json": {
               "config": {
-                "tags": [
-                  "success/kv"
-                ]
+                "field": "json"
               }
             }
-          }
-        ],
-        "onFailure": [
+          },
           {
-            "addTag": {
+            "removeField": {
               "config": {
-                "tags": [
-                  "fail/kv"
-                ]
+                "path": "kv"
               }
             }
           }

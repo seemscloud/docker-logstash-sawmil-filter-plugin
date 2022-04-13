@@ -1,6 +1,8 @@
 [
   {
-    "message": "a:b b:c",
-    "foo": "2012-02-03"
+    "messages": {
+      "json": "{\"foo\":\"bar\"}",
+      "kv": "a:b b:c"
+    }
   }
 ]
