@@ -1,6 +1,6 @@
 - pipeline.id: ingest
-  pipeline.workers: 1
-  pipeline.batch.size: 150
+  pipeline.workers: 4
+  pipeline.batch.size: 1000
   pipeline.batch.delay: 50
   pipeline.ecs_compatibility: disabled
   pipeline.ordered: false
