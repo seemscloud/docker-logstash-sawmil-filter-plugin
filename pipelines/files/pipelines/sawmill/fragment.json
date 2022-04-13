@@ -19,16 +19,6 @@
                 ]
               }
             }
-          },
-          {
-            "removeField": {
-              "config": {
-                "fields": [
-                  "messages.kv_obj",
-                  "messages.kv"
-                ]
-              }
-            }
           }
         ]
       }
@@ -45,16 +35,6 @@
               "config": {
                 "field": "messages.json_obj",
                 "targetField": "json"
-              }
-            }
-          },
-          {
-            "removeField": {
-              "config": {
-                "fields": [
-                  "messages.json_obj",
-                  "messages.json"
-                ]
               }
             }
           }
@@ -94,15 +74,6 @@
                 "replacement": " "
               }
             }
-          },
-          {
-            "removeField": {
-              "config": {
-                "fields": [
-                  "messages.gsub"
-                ]
-              }
-            }
           }
         ]
       }
@@ -111,6 +82,10 @@
       "removeField": {
         "config": {
           "fields": [
+            "@timestamp",
+            "@version",
+            "headers",
+            "host",
             "messages"
           ]
         }
