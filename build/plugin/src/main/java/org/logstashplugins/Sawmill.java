@@ -41,14 +41,6 @@ public class Sawmill implements Filter {
         this.sourceField = config.get(SOURCE_CONFIG);
     }
 
-    private static Event fromList(final Map<String, Object> map, final EventFactory factory){
-        return (Event) factory.newEvent(map);
-    }
-
-//     public Event newEvent(Map<String, Object> eventMap) {
-//         return new org.logstash.Event(eventMap);
-//     }
-
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
@@ -57,6 +49,8 @@ public class Sawmill implements Filter {
             Doc sawmillDoc = new Doc(e.toMap());
             ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, sawmillDoc);
             Map<String, Object> eventMap = sawmillDoc.getSource();
+
+            e.overwrite(new org.logstash.Event(eventMap));
         }
 
         return events;
