@@ -11,13 +11,6 @@ import co.elastic.logstash.api.PluginConfigSpec;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.type.MapType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
 import io.logz.sawmill.Pipeline;
@@ -25,8 +18,6 @@ import io.logz.sawmill.PipelineExecutor;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.HashMap;
 import java.util.Map;
 
 @LogstashPlugin(name = "sawmill")
