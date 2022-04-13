@@ -2,10 +2,11 @@ version: '3.9'
 
 services:
   bot:
-    container_name: bot
-    hostname: bot
     build:
       context: ./bot
+    deploy:
+      replicas: 10
+
   logstash:
     container_name: logstash
     hostname: logstash
