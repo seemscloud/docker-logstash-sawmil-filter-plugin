@@ -9,17 +9,18 @@
       }
     },
     {
-      "json": {
+      "kv": {
         "config": {
           "field": "@message",
-          "targetField": "dupa"
+          "fieldSplit": " ",
+          "valueSplit": ":"
         },
         "onSuccess": [
           {
             "addTag": {
               "config": {
                 "tags": [
-                  "success"
+                  "success/kv"
                 ]
               }
             }
@@ -30,7 +31,7 @@
             "addTag": {
               "config": {
                 "tags": [
-                  "fail/fragment/json/1000"
+                  "fail/kv"
                 ]
               }
             }
