@@ -9,11 +9,34 @@
       }
     },
     {
+      "docSize": {
+        "config": {
+          "targetField": "size"
+        }
+      }
+    },
+    {
+      "gsub": {
+        "config": {
+          "field": "foo",
+          "pattern": "#",
+          "replacement": "!"
+        }
+      }
+    },
+    {
       "kv": {
         "config": {
           "field": "@message",
           "fieldSplit": " ",
-          "valueSplit": ":"
+          "valueSplit": ":",
+          "includeKeys": [
+            "a",
+            "b"
+          ],
+          "tagOfFailure": [
+            "dupa"
+          ]
         },
         "onSuccess": [
           {
