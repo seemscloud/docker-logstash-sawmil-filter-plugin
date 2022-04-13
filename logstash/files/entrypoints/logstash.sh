@@ -8,4 +8,4 @@ done
 
 logstash-plugin install --no-verify --local /plugins/logstash-filter-sawmill-1.0.0.gem
 
-logstash --config.reload.automatic --debug
+logstash --config.reload.automatic
