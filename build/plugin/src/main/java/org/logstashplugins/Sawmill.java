@@ -34,9 +34,9 @@ public class Sawmill implements Filter {
 
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
-        Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
-
         try {
+            Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
+
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
                 ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
