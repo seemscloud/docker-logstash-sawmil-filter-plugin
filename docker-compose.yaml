@@ -5,7 +5,7 @@ services:
     build:
       context: ./bot
     deploy:
-      replicas: 25
+      replicas: 1
   logstash:
     container_name: logstash
     hostname: logstash
@@ -33,11 +33,11 @@ services:
     container_name: pipelines
     hostname: pipelines
     build:
-      context: ./logstash
+      context: ./pipelines
     volumes:
-      - ${PWD}/logstash/files/pipelines:/root/config/pipelines:ro
-      - ${PWD}/logstash/files/entrypoints/logstash-filters.sh:/root/entrypoint.sh:ro
-      - logstash-pipelines:/pipelines:rw
+      - ${PWD}/pipelines/files/pipelines:/pipelines/input:ro
+      - ${PWD}/pipelines/entrypoint.sh:/root/entrypoint.sh:ro
+      - logstash-pipelines:/pipelines/output:rw
   build:
     container_name: build
     hostname: build

@@ -1,0 +1,42 @@
+{
+  "steps": [
+    {
+      "rename": {
+        "config": {
+          "from": "message",
+          "to": "@message"
+        }
+      }
+    },
+    {
+      "json": {
+        "config": {
+          "field": "@message",
+          "targetField": "dupa"
+        },
+        "onSuccess": [
+          {
+            "addTag": {
+              "config": {
+                "tags": [
+                  "success"
+                ]
+              }
+            }
+          }
+        ],
+        "onFailure": [
+          {
+            "addTag": {
+              "config": {
+                "tags": [
+                  "fail/fragment/json/1000"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

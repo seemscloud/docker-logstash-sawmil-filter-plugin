@@ -1,6 +1,6 @@
 [
   {
-    "message": "Example message",
-    "foo": "foo"
+    "message": "{\"var\":\"bar\"}",
+    "foo": "bar"
   }
 ]

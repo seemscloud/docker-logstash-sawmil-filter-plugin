@@ -10,6 +10,10 @@ import co.elastic.logstash.api.LogstashPlugin;
 import co.elastic.logstash.api.PluginConfigSpec;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.FileUtils;
+
+import java.io.IOException;
+import java.io.File;
 
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
@@ -35,7 +39,10 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-            Pipeline pipeline = new Pipeline.Factory().create("{steps:[{removeField:{config:{path:\"message\"}}}]}");
+            File file = new File("/root/config/pipelines/sawmill/fragment.json");
+            String content = FileUtils.readFileToString(file, "UTF-8");
+
+            Pipeline pipeline = new Pipeline.Factory().create(content);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
