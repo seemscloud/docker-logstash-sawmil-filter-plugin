@@ -1,8 +1,9 @@
 [
   {
     "messages": {
-      "json": "{\"foo\":\"bar\"}",
-      "kv": "a:b b:c"
+      "json": "{\"username\":\"username\", \"password\": \"password\"}",
+      "kv": "before:Lorem after:Ipsum",
+      "gsub": "-Lorem-Ipsum-"
     }
   }
 ]

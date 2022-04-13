@@ -3,18 +3,29 @@
     {
       "addField": {
         "config": {
-          "path": "kv",
+          "path": "messages.kv_obj",
           "value": "{{messages.kv}}"
         },
         "onSuccess": [
           {
             "kv": {
               "config": {
-                "field": "kv",
+                "field": "messages.kv_obj",
                 "valueSplit": ":",
+                "targetField": "kv",
                 "includeKeys": [
-                  "a",
-                  "b"
+                  "before",
+                  "after"
+                ]
+              }
+            }
+          },
+          {
+            "removeField": {
+              "config": {
+                "fields": [
+                  "messages.kv_obj",
+                  "messages.kv"
                 ]
               }
             }
@@ -25,18 +36,84 @@
     {
       "addField": {
         "config": {
-          "path": "json",
+          "path": "messages.json_obj",
           "value": "{{messages.json}}"
         },
         "onSuccess": [
           {
             "json": {
               "config": {
-                "field": "json"
+                "field": "messages.json_obj",
+                "targetField": "json"
+              }
+            }
+          },
+          {
+            "removeField": {
+              "config": {
+                "fields": [
+                  "messages.json_obj",
+                  "messages.json"
+                ]
               }
             }
           }
         ]
+      }
+    },
+    {
+      "addField": {
+        "config": {
+          "path": "gsub",
+          "value": "{{messages.gsub}}"
+        },
+        "onSuccess": [
+          {
+            "gsub": {
+              "config": {
+                "field": "gsub",
+                "pattern": "^-",
+                "replacement": ""
+              }
+            }
+          },
+          {
+            "gsub": {
+              "config": {
+                "field": "gsub",
+                "pattern": "-$",
+                "replacement": ""
+              }
+            }
+          },
+          {
+            "gsub": {
+              "config": {
+                "field": "gsub",
+                "pattern": "-",
+                "replacement": " "
+              }
+            }
+          },
+          {
+            "removeField": {
+              "config": {
+                "fields": [
+                  "messages.gsub"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "removeField": {
+        "config": {
+          "fields": [
+            "messages"
+          ]
+        }
       }
     }
   ]
