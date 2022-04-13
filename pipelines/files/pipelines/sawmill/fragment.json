@@ -82,10 +82,6 @@
       "removeField": {
         "config": {
           "fields": [
-            "@timestamp",
-            "@version",
-            "headers",
-            "host",
             "messages"
           ]
         }

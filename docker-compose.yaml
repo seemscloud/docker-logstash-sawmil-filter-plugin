@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  performance:
+    deploy:
+      replicas: 10
+    build:
+      context: ./performance
+    environment:
+      - "LINES=10"
+    volumes:
+      - ${PWD}/performance/files/filebeat.yml:/app/filebeat.yml:ro
+      - ${PWD}/performance/entrypoint.sh:/app/entrypoint.sh:ro
   bot:
     build:
       context: ./bot
