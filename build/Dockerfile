@@ -23,7 +23,15 @@ RUN echo "org.gradle.parallel=true" >> logstash/gradle.properties && \
 RUN cd logstash && \
     ./gradlew assemble
 
-COPY ./plugin plugin
+COPY files/configuration plugin
+COPY files/source plugin
+
+RUN cd plugin && \
+    chmod +x gradlew && \
+    ./gradlew --configuration-cache && \
+    ./gradlew build --refresh-dependencies && \
+    ./gradlew --configuration-cache shadowJar && \
+    ./gradlew --stop
 
 RUN cd plugin && \
     chmod +x gradlew && \

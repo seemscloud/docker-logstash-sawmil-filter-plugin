@@ -38,6 +38,7 @@ public class Sawmill implements Filter {
 
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
+        ClassSingleton classSingleton1 = ClassSingleton.getInstance();
         try {
             String sawmillPipelines = System.getenv("SAWMILL_PIPELINES_PATH");
             File file = new File(sawmillPipelines + "/fragment.json");
