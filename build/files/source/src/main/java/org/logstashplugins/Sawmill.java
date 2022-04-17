@@ -45,7 +45,7 @@ public class Sawmill implements Filter {
 
             String pipelineString = this.sawmillSingleton.getPipeline(pipelinesDir, pipelineFilename);
 
-            Pipeline sawmillPipeline = new Pipeline.Factory().create(pipelineString);
+//             Pipeline sawmillPipeline = new Pipeline.Factory().create(pipelineString);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
