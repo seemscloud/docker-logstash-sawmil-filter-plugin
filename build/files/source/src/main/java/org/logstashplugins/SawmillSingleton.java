@@ -28,6 +28,8 @@ public final class SawmillSingleton {
                 File file = new File(dir + "/" + filename);
                 this.pipeline = FileUtils.readFileToString(file, "UTF-8");
                 System.out.print("Pipeline created..");
+            } else {
+                System.out.print("Pipeline read from cache..");
             }
         }
         catch (Exception ex) {
