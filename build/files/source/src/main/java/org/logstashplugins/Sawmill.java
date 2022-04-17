@@ -40,10 +40,10 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-            String pipelinesDir = System.getenv("SAWMILL_PIPELINES_PATH");
-            String pipelineFilename = "fragment.json";
+            String dir = System.getenv("SAWMILL_PIPELINES_PATH");
+            String filename = "fragment.json";
 
-            String pipelineString = this.sawmillSingleton.getPipeline(pipelinesDir, pipelineFilename);
+            String pipelineString = this.sawmillSingleton.getPipeline(dir, filename);
 
             Pipeline sawmillPipeline = new Pipeline.Factory().create(pipelineString);
 
