@@ -13,6 +13,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
+import io.logz.sawmill.ProcessResult;
+import io.logz.sawmill.Processor;
+import io.logz.sawmill.Template;
+import io.logz.sawmill.TemplateService;
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
 import io.logz.sawmill.Pipeline;
@@ -42,7 +46,6 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-
             String dir = System.getenv("SAWMILL_PIPELINES_PATH");
             String filename = "fragment.json";
             String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
