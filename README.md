@@ -34,7 +34,7 @@ Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
 io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sawmill.processors.GeoIpProcessor
 ```
 
-Don't know how to fix this. At this moment removed initialization geoIpConfiguration in `Factory();`
+Don't know how to fix this. At this moment removed initialization `geoIpConfiguration` in `Factory();`
 
 ### Sometimes `zip file closed`
 ```java
