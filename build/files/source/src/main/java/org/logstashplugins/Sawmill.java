@@ -10,10 +10,8 @@ import co.elastic.logstash.api.LogstashPlugin;
 import co.elastic.logstash.api.PluginConfigSpec;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
-import java.io.File;
 
 import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
@@ -24,30 +22,34 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+
 @LogstashPlugin(name = "sawmill")
 public class Sawmill implements Filter {
     public static final PluginConfigSpec<String> SOURCE_CONFIG = PluginConfigSpec.stringSetting("source", "message");
 
     private String id;
     private String sourceField;
+    SawmillSingleton sawmillSingleton;
 
     public Sawmill(String id, Configuration config, Context context) {
         this.id = id;
         this.sourceField = config.get(SOURCE_CONFIG);
+        this.sawmillSingleton = SawmillSingleton.getInstance();
     }
 
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-            String sawmillPipelines = System.getenv("SAWMILL_PIPELINES_PATH");
-            File file = new File(sawmillPipelines + "/fragment.json");
-            String content = FileUtils.readFileToString(file, "UTF-8");
+            String pipelinesDir = System.getenv("SAWMILL_PIPELINES_PATH");
+            String pipelineFilename = "fragment.json";
 
-            Pipeline pipeline = new Pipeline.Factory().create(content);
+            String pipelineString = this.sawmillSingleton.getPipeline(pipelinesDir, pipelineFilename);
+
+            Pipeline sawmillPipeline = new Pipeline.Factory().create(pipelineString);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
-                ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
+                ExecutionResult executionResult = new PipelineExecutor().execute(sawmillPipeline, doc);
 
                 Map<String, Object> map = doc.getSource();
 
