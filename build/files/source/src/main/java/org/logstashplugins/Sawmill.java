@@ -69,7 +69,7 @@ public class Sawmill implements Filter {
             GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
             String pipelineString = this.sawmillSingleton.getPipeline(dir, filename);
 
-            Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
+            Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
             Pipeline pipeline = factory.create(pipelineString);
 
             for (Event e : events) {
