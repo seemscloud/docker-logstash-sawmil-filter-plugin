@@ -17,12 +17,12 @@ import io.logz.sawmill.Doc;
 import io.logz.sawmill.ExecutionResult;
 import io.logz.sawmill.Pipeline;
 import io.logz.sawmill.PipelineExecutor;
+import io.logz.sawmill.processors.GeoIpProcessor;
 import io.logz.sawmill.GeoIpConfiguration;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
 
 @LogstashPlugin(name = "sawmill")
 public class Sawmill implements Filter {
@@ -43,16 +43,17 @@ public class Sawmill implements Filter {
         try {
             String dir = System.getenv("SAWMILL_PIPELINES_PATH");
             String filename = "fragment.json";
-            String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
+//             String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
 
-            GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
             String pipelineString = this.sawmillSingleton.getPipeline(dir, filename);
+            Pipeline pipeline = new Pipeline.Factory().create(pipelineString);
 
-            Pipeline sawmillPipeline = new Pipeline.Factory(geoIpConfiguration).create(pipelineString);
+//             GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
+//             Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
-                ExecutionResult executionResult = new PipelineExecutor().execute(sawmillPipeline, doc);
+                ExecutionResult executionResult = new PipelineExecutor().execute(pipeline, doc);
 
                 Map<String, Object> map = doc.getSource();
 
