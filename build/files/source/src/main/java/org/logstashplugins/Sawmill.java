@@ -66,18 +66,13 @@ public class Sawmill implements Filter {
 
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
-        System.out.print("Pipeline: " + this.pipeline + "\n");
-        System.out.print("GeoIP: " + this.geoIp + "\n");
         try {
             String pipelinesDir = System.getenv("SAWMILL_PIPELINES_DIR");
             String pipelinesPath = pipelinesDir + "/" + this.pipeline + ".json";
-            System.out.print("Pipeline Path: " + pipelinesPath + "\n");
             String pipelineString = FileUtils.readFileToString(new File(pipelinesPath), "UTF-8");
 
             String geoIpDir = System.getenv("SAWMILL_GEOIP_DB_DIR");
             String geoIpPath = geoIpDir + "/" + this.geoIp + ".mmdb";
-            System.out.print("GeoIP Path: " + geoIpPath + "\n");
-
             GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(geoIpPath);
 
             Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
