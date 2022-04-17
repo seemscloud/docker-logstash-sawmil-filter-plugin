@@ -23,7 +23,8 @@ services:
       - "9600:9600"
     environment:
       - "LS_JAVA_OPTS=-Xmx8g -Xms8g -Dls.cgroup.cpuacct.path.override=/ -Dls.cgroup.cpu.path.override=/"
-      - "SAWMILL_PIPELINES_PATH=/root/config/pipelines/sawmill"
+      - "SAWMILL_PIPELINES_DIR=/root/config/pipelines/sawmill"
+      - "SAWMILL_GEOIP_DB_DIR=/root/config/geoip"
     build:
       context: ./logstash
     deploy:
@@ -35,7 +36,7 @@ services:
           cpus: '4'
           memory: 9G
     volumes:
-      - ${PWD}/logstash/files/GeoLite2-City.mmdb:/root/config/GeoLite2-City.mmdb:ro
+      - ${PWD}/logstash/files/GeoLite2-City.mmdb:/root/config/geoip/GeoLite2-City.mmdb:ro
       - ${PWD}/logstash/files/logstash.yml:/root/config/logstash.yml:ro
       - ${PWD}/logstash/files/pipelines.yml:/root/config/pipelines.yml:ro
       - ${PWD}/logstash/files/entrypoints/logstash.sh:/root/entrypoint.sh:ro

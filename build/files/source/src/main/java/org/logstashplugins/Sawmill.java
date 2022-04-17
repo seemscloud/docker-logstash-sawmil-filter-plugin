@@ -10,8 +10,10 @@ import co.elastic.logstash.api.LogstashPlugin;
 import co.elastic.logstash.api.PluginConfigSpec;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
+import java.io.File;
 
 import io.logz.sawmill.Condition;
 import io.logz.sawmill.ConditionFactoryRegistry;
@@ -44,30 +46,39 @@ import io.logz.sawmill.WatchedPipeline;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Arrays;
 
 @LogstashPlugin(name = "sawmill")
 public class Sawmill implements Filter {
-    public static final PluginConfigSpec<String> SOURCE_CONFIG = PluginConfigSpec.stringSetting("source", "message");
+    public static final PluginConfigSpec<String> PIPELINE_CONFIG = PluginConfigSpec.stringSetting("pipeline", "sawmill");
+    public static final PluginConfigSpec<String> GEOIP_CONFIG = PluginConfigSpec.stringSetting("geoip", "GeoLite2");
 
     private String id;
-    private String sourceField;
-    SawmillSingleton sawmillSingleton;
+
+    private String pipeline;
+    private String geoIp;
 
     public Sawmill(String id, Configuration config, Context context) {
         this.id = id;
-        this.sourceField = config.get(SOURCE_CONFIG);
-        this.sawmillSingleton = SawmillSingleton.getInstance();
+        this.pipeline = config.get(PIPELINE_CONFIG);
+        this.geoIp = config.get(GEOIP_CONFIG);
     }
 
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
+        System.out.print("Pipeline: " + this.pipeline + "\n");
+        System.out.print("GeoIP: " + this.geoIp + "\n");
         try {
-            String dir = System.getenv("SAWMILL_PIPELINES_PATH");
-            String filename = "fragment.json";
-            String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
+            String pipelinesDir = System.getenv("SAWMILL_PIPELINES_DIR");
+            String pipelinesPath = pipelinesDir + "/" + this.pipeline + ".json";
+            System.out.print("Pipeline Path: " + pipelinesPath + "\n");
+            String pipelineString = FileUtils.readFileToString(new File(pipelinesPath), "UTF-8");
 
-            GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
-            String pipelineString = this.sawmillSingleton.getPipeline(dir, filename);
+            String geoIpDir = System.getenv("SAWMILL_GEOIP_DB_DIR");
+            String geoIpPath = geoIpDir + "/" + this.geoIp + ".mmdb";
+            System.out.print("GeoIP Path: " + geoIpPath + "\n");
+
+            GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(geoIpPath);
 
             Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
             Pipeline pipeline = factory.create(pipelineString);
@@ -93,7 +104,7 @@ public class Sawmill implements Filter {
 
     @Override
     public Collection<PluginConfigSpec<?>> configSchema() {
-        return Collections.singletonList(SOURCE_CONFIG);
+        return Arrays.asList(PIPELINE_CONFIG, GEOIP_CONFIG);
     }
 
     @Override
