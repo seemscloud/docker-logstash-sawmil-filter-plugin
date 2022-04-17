@@ -21,3 +21,18 @@ docker-compose up --force-recreate --build --remove-orphans build
 ```bash
 docker-compose up --force-recreate --build --remove-orphans bot
 ```
+
+## Exceptions
+
+### Problem to initialize GeoIP
+
+```java
+Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
+```
+
+```java
+io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sawmill.processors.GeoIpProcessor
+```
+
+### Sometimes zip file closed?
+ - `java.lang.IllegalStateException: zip file closed`
