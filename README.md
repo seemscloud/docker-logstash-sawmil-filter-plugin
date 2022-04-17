@@ -27,7 +27,7 @@ docker-compose up --force-recreate --build --remove-orphans bot
 ### Problem to initialize GeoIP
 
 ```java
-Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
+Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration); // 
 ```
 
 ```java
