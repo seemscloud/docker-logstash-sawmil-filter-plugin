@@ -28,13 +28,6 @@ COPY files/source plugin
 
 RUN cd plugin && \
     chmod +x gradlew && \
-    ./gradlew --configuration-cache && \
-    ./gradlew build --refresh-dependencies && \
-    ./gradlew --configuration-cache shadowJar && \
-    ./gradlew --stop
-
-RUN cd plugin && \
-    chmod +x gradlew && \
     ./gradlew gem
 
 ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]
