@@ -20,6 +20,7 @@ import io.logz.sawmill.PipelineExecutor;
 import io.logz.sawmill.processors.GeoIpProcessor;
 import io.logz.sawmill.GeoIpConfiguration;
 
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -41,15 +42,16 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
+
             String dir = System.getenv("SAWMILL_PIPELINES_PATH");
             String filename = "fragment.json";
-//             String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
+            String mmdbFilePath = "/root/config/GeoLite2-City.mmdb";
 
+            GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
             String pipelineString = this.sawmillSingleton.getPipeline(dir, filename);
-            Pipeline pipeline = new Pipeline.Factory().create(pipelineString);
 
-//             GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(mmdbFilePath);
-//             Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
+            Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
+            Pipeline pipeline = factory.create(pipelineString);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
