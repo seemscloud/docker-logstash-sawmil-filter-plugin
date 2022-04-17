@@ -35,6 +35,7 @@ services:
           cpus: '4'
           memory: 9G
     volumes:
+      - ${PWD}/logstash/files/GeoLite2-City.mmdb:/root/config/GeoLite2-City.mmdb:ro
       - ${PWD}/logstash/files/logstash.yml:/root/config/logstash.yml:ro
       - ${PWD}/logstash/files/pipelines.yml:/root/config/pipelines.yml:ro
       - ${PWD}/logstash/files/entrypoints/logstash.sh:/root/entrypoint.sh:ro
