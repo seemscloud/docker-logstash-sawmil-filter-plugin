@@ -43,4 +43,8 @@ io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sa
 
 ## Example
 
+### Usage
+![image](https://user-images.githubusercontent.com/9096064/163799186-c75e1feb-df8b-4cb4-b392-7f96885c9103.png)
+
+### Output
 ![image](https://user-images.githubusercontent.com/9096064/163799127-5a2a26f4-66cc-4017-90d7-bf78a395eb0b.png)
