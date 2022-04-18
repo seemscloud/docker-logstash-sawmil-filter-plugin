@@ -1,30 +1,34 @@
 # Sawmill Logstash Filter Plugin
 
-## Development 
+## Development
 
 ### Copy Logstash / Sawmill pipelines to Logstash volume
+
 ```bash
 docker-compose up --force-recreate --build --remove-orphans pipelines
 ```
 
 ### Start Logstash and wait for plugin
+
 ```bash
 docker-compose up --force-recreate --build --remove-orphans logstash
 ```
 
 ### Build Sawmill Logstash filter plugin copy to logstash volume
+
 ```bash
 docker-compose up --force-recreate --build --remove-orphans build
 ```
 
 ### Send messages in loop to Logstash
+
 ```bash
 docker-compose up --force-recreate --build --remove-orphans bot
 ```
 
 ## TODO
 
-### Problem to initialize GeoIP
+- Problem to initialize GeoIP
 
 ```java
 Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
@@ -34,6 +38,5 @@ Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
 io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sawmill.processors.GeoIpProcessor
 ```
 
-Don't know how to fix this. At this moment removed initialization `geoIpConfiguration` in `Factory();`
-
-### Reload and Delete deleted Sawmill pipeline file
+- Reload Sawmill pipelines if file changed
+- Delete Sawmill pipeline if file deleted
