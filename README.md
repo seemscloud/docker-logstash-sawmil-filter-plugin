@@ -43,9 +43,7 @@ io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sa
 
 ## Example
 
-### Sawmill pipelines
-
-[Pipelines](/pipelines/files/pipelines/sawmill)
+### [Sawmill Pipelines](/pipelines/files/pipelines/sawmill)
 
 ### Usage
 ![image](https://user-images.githubusercontent.com/9096064/163799186-c75e1feb-df8b-4cb4-b392-7f96885c9103.png)
