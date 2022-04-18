@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "rename": {
+        "config": {
+          "from": "@type",
+          "to": "@typetype"
+        }
+      }
+    }
+  ]
+}
