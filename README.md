@@ -38,5 +38,5 @@ Pipeline.Factory factory = new Pipeline.Factory(geoIpConfiguration);
 io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sawmill.processors.GeoIpProcessor
 ```
 
-- Reload Sawmill pipelines if file changed
-- Delete Sawmill pipeline if file deleted
+- Reload `Sawmill Pipeline/GeoIP DB` in object SawmillPipeline if files changed
+- Delete `Sawmill Pipeline` if file deleted
