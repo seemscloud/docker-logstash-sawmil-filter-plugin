@@ -35,8 +35,3 @@ io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sa
 ```
 
 Don't know how to fix this. At this moment removed initialization `geoIpConfiguration` in `Factory();`
-
-### Sometimes `zip file closed`
-```java
-java.lang.IllegalStateException: zip file closed
-```
