@@ -12,7 +12,7 @@
               "config": {
                 "field": "messages.kv_obj",
                 "valueSplit": ":",
-                "targetField": "kv",
+                "targetField": "foo.kv",
                 "includeKeys": [
                   "before",
                   "after"
@@ -34,7 +34,7 @@
             "json": {
               "config": {
                 "field": "messages.json_obj",
-                "targetField": "json"
+                "targetField": "foo.json"
               }
             }
           }

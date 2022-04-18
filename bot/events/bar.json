@@ -5,6 +5,6 @@
       "kv": "before:Lorem after:Ipsum",
       "gsub": "-Lorem-Ipsum-"
     },
-    "type": "fragment"
+    "type": "bar"
   }
 ]

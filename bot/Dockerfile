@@ -21,7 +21,6 @@ RUN groupadd -g "${APP_GID}" "${APP_GROUP}" && \
 WORKDIR "${APP_DIR}"
 
 COPY ./entrypoint.sh .
-COPY ./event.json .
 
 RUN chown --recursive "${APP_USER}":"${APP_USER}" "${APP_DIR}"
 

@@ -3,34 +3,20 @@
     {
       "addField": {
         "config": {
-          "path": "gsub",
-          "value": "{{messages.gsub}}"
+          "path": "messages.kv_obj",
+          "value": "{{messages.kv}}"
         },
         "onSuccess": [
           {
-            "gsub": {
+            "kv": {
               "config": {
-                "field": "gsub",
-                "pattern": "^-",
-                "replacement": ""
-              }
-            }
-          },
-          {
-            "gsub": {
-              "config": {
-                "field": "gsub",
-                "pattern": "-$",
-                "replacement": ""
-              }
-            }
-          },
-          {
-            "gsub": {
-              "config": {
-                "field": "gsub",
-                "pattern": "-",
-                "replacement": " "
+                "field": "messages.kv_obj",
+                "valueSplit": ":",
+                "targetField": "bar.kv",
+                "includeKeys": [
+                  "before",
+                  "after"
+                ]
               }
             }
           }
@@ -38,20 +24,21 @@
       }
     },
     {
-      "removeField": {
+      "addField": {
         "config": {
-          "fields": [
-            "messages"
-          ]
-        }
-      }
-    },
-    {
-      "rename": {
-        "config": {
-          "from": "type",
-          "to": "@type"
-        }
+          "path": "messages.json_obj",
+          "value": "{{messages.json}}"
+        },
+        "onSuccess": [
+          {
+            "json": {
+              "config": {
+                "field": "messages.json_obj",
+                "targetField": "bar.json"
+              }
+            }
+          }
+        ]
       }
     }
   ]

@@ -1,11 +1,17 @@
 #!/bin/bash
 
 while true; do
-  MESSAGE="${LOG_LINE}"
+  curl -X PUT http://logstash:8080 \
+    -H "Content-Type: application/json" \
+    -d @events/foo.json --silent > /dev/null
 
   curl -X PUT http://logstash:8080 \
     -H "Content-Type: application/json" \
-    -d @event.json --silent > /dev/null
+    -d @events/bar.json --silent > /dev/null
 
-  sleep 1
+  curl -X PUT http://logstash:8080 \
+    -H "Content-Type: application/json" \
+    -d @events/moo.json --silent > /dev/null
+
+  sleep 5
 done

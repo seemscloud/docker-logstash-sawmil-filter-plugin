@@ -16,6 +16,8 @@ services:
       context: ./bot
     deploy:
       replicas: 1
+    volumes:
+      - ${PWD}/bot/events:/app/events:ro
   logstash:
     container_name: logstash
     hostname: logstash
