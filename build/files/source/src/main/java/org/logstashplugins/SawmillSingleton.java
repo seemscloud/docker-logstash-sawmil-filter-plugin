@@ -40,8 +40,6 @@ public final class SawmillSingleton {
             this.pipelines.add(sawmillPipeline);
         }
 
-        System.out.print("Number of pipelines: " + this.pipelines.size() + "\n");
-
         return sawmillPipeline.getPipeline();
     }
 }
