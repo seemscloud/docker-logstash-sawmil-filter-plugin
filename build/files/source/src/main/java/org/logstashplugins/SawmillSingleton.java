@@ -16,7 +16,9 @@ public final class SawmillSingleton {
     private SawmillSingleton() {  }
 
     public static SawmillSingleton getInstance() {
-        if (INSTANCE == null) { INSTANCE = new SawmillSingleton(); }
+        if (INSTANCE == null) {
+            INSTANCE = new SawmillSingleton();
+        }
 
         return INSTANCE;
     }
@@ -25,14 +27,18 @@ public final class SawmillSingleton {
         try {
             if (this.pipeline == null) {
                 String pipelinesDir = System.getenv("SAWMILL_PIPELINES_DIR");
+                System.out.print("Pipeline directory: " + pipelinesDir);
                 String pipelinesPath = pipelinesDir + "/" + pipeline + ".json";
+                System.out.print("Pipeline path: " + pipelinesPath);
                 String pipelineString = FileUtils.readFileToString(new File(pipelinesPath), "UTF-8");
 
                 String geoIpDir = System.getenv("SAWMILL_GEOIP_DB_DIR");
+                System.out.print("GeoIP directory: " + geoIpDir);
                 String geoIpPath = geoIpDir + "/" + geoIp + ".mmdb";
+                System.out.print("GeoIP path: " + geoIpPath);
                 GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(geoIpPath);
 
-                Pipeline.Factory factory = new Pipeline.Factory(); // Factory(geoIpConfiguration);
+                Pipeline.Factory factory = new Pipeline.Factory(); // geoIpConfiguration
                 this.pipeline = factory.create(pipelineString);
             }
         }

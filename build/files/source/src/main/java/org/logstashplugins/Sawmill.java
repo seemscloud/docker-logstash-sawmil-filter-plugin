@@ -49,7 +49,7 @@ public class Sawmill implements Filter {
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());
-                ExecutionResult executionResult = new PipelineExecutor().execute(sawmill, doc);
+                ExecutionResult executionResult = new PipelineExecutor().execute(this.sawmill, doc);
 
                 Map<String, Object> map = doc.getSource();
 
