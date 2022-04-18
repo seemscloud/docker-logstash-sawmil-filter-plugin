@@ -7,11 +7,5 @@ while true; do
     -H "Content-Type: application/json" \
     -d @event.json --silent > /dev/null
 
-  if [ "${?}" == "0" ]; then
-    echo "Sent event to Logstash.."
-  else
-    echo "Failed send event.."
-  fi
-
 #  sleep 1
 done
