@@ -40,3 +40,7 @@ io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sa
 
 - Reload `Sawmill Pipeline/GeoIP DB` in object SawmillPipeline if files changed
 - Delete `Sawmill Pipeline` if file deleted
+
+## Example
+
+![image](https://user-images.githubusercontent.com/9096064/163799127-5a2a26f4-66cc-4017-90d7-bf78a395eb0b.png)
