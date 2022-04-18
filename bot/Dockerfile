@@ -8,12 +8,11 @@ ARG APP_GID="${APP_UID}"
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV APP_DIR="/app"
-ENV PATH="${APP_DIR}/bin:${PATH}"
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install wget openssl curl -y
+    apt-get install curl -y
 
 RUN groupadd -g "${APP_GID}" "${APP_GROUP}" && \
     useradd -u "${APP_UID}" -g "${APP_GID}" -s /bin/bash -m -d "${APP_DIR}" "${APP_USER}"
