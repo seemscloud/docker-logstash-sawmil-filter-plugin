@@ -29,12 +29,8 @@ public final class SawmillSingleton {
         SawmillPipeline sawmillPipeline = null;
 
         for (int i = 0; i < pipelines.size(); i++) {
-            System.out.print(this.pipelines.get(i).getPipelinePath() + "\n");
-            System.out.print(pipelinePath + "\n");
-
             if (pipelinePath.equals(this.pipelines.get(i).getPipelinePath())) {
                 sawmillPipeline = this.pipelines.get(i);
-                System.out.print("Pipeline '" + pipeline + "' already exists..\n");
                 break;
             }
         }
@@ -42,7 +38,6 @@ public final class SawmillSingleton {
         if (sawmillPipeline == null) {
             sawmillPipeline = new SawmillPipeline(geoIpPath, pipelinePath);
             this.pipelines.add(sawmillPipeline);
-            System.out.print("Create '" + pipeline + "' Sawmill pipeline..\n");
         }
 
         return sawmillPipeline.getPipeline();
