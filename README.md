@@ -22,7 +22,7 @@ docker-compose up --force-recreate --build --remove-orphans build
 docker-compose up --force-recreate --build --remove-orphans bot
 ```
 
-## Exceptions
+## TODO
 
 ### Problem to initialize GeoIP
 
@@ -35,3 +35,5 @@ io.logz.sawmill.exceptions.SawmillException: failed to load processor io.logz.sa
 ```
 
 Don't know how to fix this. At this moment removed initialization `geoIpConfiguration` in `Factory();`
+
+### Reload and Delete deleted Sawmill pipeline file
