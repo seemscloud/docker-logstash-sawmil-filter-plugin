@@ -13,5 +13,5 @@ while true; do
     -H "Content-Type: application/json" \
     -d @events/moo.json --silent > /dev/null
 
-  sleep 5
+  sleep 1
 done
