@@ -7,5 +7,5 @@ while true; do
     -H "Content-Type: application/json" \
     -d @event.json --silent > /dev/null
 
-#  sleep 1
+  sleep 1
 done

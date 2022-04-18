@@ -1,18 +1,16 @@
 package org.logstashplugins;
 
-import org.apache.commons.io.FileUtils;
-
 import io.logz.sawmill.Pipeline;
-import io.logz.sawmill.GeoIpConfiguration;
-import io.logz.sawmill.processors.GeoIpProcessor;
 
-import java.io.File;
 import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class SawmillSingleton {
     private static SawmillSingleton INSTANCE;
 
-    private Pipeline pipeline = null;
+    List<SawmillPipeline> pipelines = new ArrayList<SawmillPipeline>();
 
     private SawmillSingleton() {  }
 
@@ -24,23 +22,29 @@ public final class SawmillSingleton {
         return INSTANCE;
     }
 
-    public Pipeline getPipeline(String pipeline, String geoIp) {
-        try {
-            if (this.pipeline == null) {
-                String pipelinesPath = System.getenv("SAWMILL_PIPELINES_DIR") + "/" + pipeline + ".json";
-                String pipelineString = FileUtils.readFileToString(new File(pipelinesPath), "UTF-8");
+    public Pipeline getPipeline(String geoIp, String pipeline) {
+        String geoIpPath = System.getenv("SAWMILL_GEOIP_DB_DIR") + "/" + geoIp + ".mmdb";
+        String pipelinePath = System.getenv("SAWMILL_PIPELINES_DIR") + "/" + pipeline + ".json";
 
-                String geoIpPath = System.getenv("SAWMILL_GEOIP_DB_DIR") + "/" + geoIp + ".mmdb";
-                GeoIpConfiguration geoIpConfiguration = new GeoIpConfiguration(geoIpPath);
+        SawmillPipeline sawmillPipeline = null;
 
-                Pipeline.Factory factory = new Pipeline.Factory(); // geoIpConfiguration
-                this.pipeline = factory.create(pipelineString);
+        for (int i = 0; i < pipelines.size(); i++) {
+            System.out.print(this.pipelines.get(i).getPipelinePath() + "\n");
+            System.out.print(pipelinePath + "\n");
+
+            if (pipelinePath.equals(this.pipelines.get(i).getPipelinePath())) {
+                sawmillPipeline = this.pipelines.get(i);
+                System.out.print("Pipeline '" + pipeline + "' already exists..\n");
+                break;
             }
         }
-        catch (Exception ex) {
-            System.out.print(ex);
+
+        if (sawmillPipeline == null) {
+            sawmillPipeline = new SawmillPipeline(geoIpPath, pipelinePath);
+            this.pipelines.add(sawmillPipeline);
+            System.out.print("Create '" + pipeline + "' Sawmill pipeline..\n");
         }
 
-        return this.pipeline;
+        return sawmillPipeline.getPipeline();
     }
 }

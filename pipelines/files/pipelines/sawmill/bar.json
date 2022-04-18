@@ -3,47 +3,6 @@
     {
       "addField": {
         "config": {
-          "path": "messages.kv_obj",
-          "value": "{{messages.kv}}"
-        },
-        "onSuccess": [
-          {
-            "kv": {
-              "config": {
-                "field": "messages.kv_obj",
-                "valueSplit": ":",
-                "targetField": "kv",
-                "includeKeys": [
-                  "before",
-                  "after"
-                ]
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "addField": {
-        "config": {
-          "path": "messages.json_obj",
-          "value": "{{messages.json}}"
-        },
-        "onSuccess": [
-          {
-            "json": {
-              "config": {
-                "field": "messages.json_obj",
-                "targetField": "json"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "addField": {
-        "config": {
           "path": "gsub",
           "value": "{{messages.gsub}}"
         },
@@ -84,6 +43,14 @@
           "fields": [
             "messages"
           ]
+        }
+      }
+    },
+    {
+      "rename": {
+        "config": {
+          "from": "type",
+          "to": "@type"
         }
       }
     }

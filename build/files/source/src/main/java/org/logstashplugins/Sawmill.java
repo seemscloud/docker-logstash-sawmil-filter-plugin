@@ -31,7 +31,6 @@ public class Sawmill implements Filter {
     public static final PluginConfigSpec<String> GEOIP_CONFIG = PluginConfigSpec.stringSetting("geoip", "GeoLite2");
 
     private String id;
-
     private String pipeline;
     private String geoIp;
     Pipeline sawmill;
@@ -45,7 +44,7 @@ public class Sawmill implements Filter {
     @Override
     public Collection<Event> filter(Collection<Event> events, FilterMatchListener matchListener) {
         try {
-            this.sawmill = SawmillSingleton.getInstance().getPipeline(this.pipeline, this.geoIp);
+            this.sawmill = SawmillSingleton.getInstance().getPipeline(this.geoIp, this.pipeline);
 
             for (Event e : events) {
                 Doc doc = new Doc(e.toMap());

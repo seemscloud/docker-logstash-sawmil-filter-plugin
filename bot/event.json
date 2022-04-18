@@ -4,6 +4,7 @@
       "json": "{\"username\":\"username\", \"password\": \"password\"}",
       "kv": "before:Lorem after:Ipsum",
       "gsub": "-Lorem-Ipsum-"
-    }
+    },
+    "type": "fragment"
   }
 ]
